@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Conductor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #f1f5f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      padding: 24px;
+      width: 100%;
+      max-width: 400px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: #334155;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      margin-bottom: 16px;
+    }
+    button {
+      width: 100%;
+      background: #2563eb;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1d4ed8;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Registro de Conductor</h1>
+    <form id="form-conductor">
+      <label for="nombre">Nombre completo</label>
+      <input type="text" id="nombre" required>
+
+      <label for="apellido">Apellido</label>
+      <input type="text" id="apellido" required>
+
+      <label for="tipo-doc">Tipo de documento</label>
+      <select id="tipo-doc" required>
+        <option value="Cédula">Cédula</option>
+        <option value="Tarjeta de identidad">Tarjeta de identidad</option>
+      </select>
+
+      <label for="numero-doc">Número del documento</label>
+      <input type="text" id="numero-doc" required>
+
+      <label for="placa">Placa de la moto</label>
+      <input type="text" id="placa" required>
+
+      <button type="submit">Registrarme como Conductor</button>
+    </form>
+  </div>
+
+  <script>
+    const scriptURL = 'TU_WEB_APP_SCRIPT_URL'; // Aquí va tu enlace del script vinculado a Google Sheet
+    const form = document.getElementById('form-conductor');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const formData = new FormData();
+      formData.append('nombre', document.getElementById('nombre').value);
+      formData.append('apellido', document.getElementById('apellido').value);
+      formData.append('tipo-doc', document.getElementById('tipo-doc').value);
+      formData.append('numero-doc', document.getElementById('numero-doc').value);
+      formData.append('placa', document.getElementById('placa').value);
+
+      fetch(scriptURL, { method: 'POST', body: formData })
+        .then(() => {
+          alert('Bienvenido conductor. Serás redirigido a las solicitudes de viaje.');
+          window.location.href = 'viajes-disponibles.html';
+        })
+        .catch(error => alert('Error al registrar: ' + error.message));
+    });
+  </script>
+</body>
+</html>
