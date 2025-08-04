@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,6 +24,7 @@
       margin: 12px auto;
       max-width: 500px;
       border-left: 6px solid #2563eb;
+      position: relative;
     }
     .viaje h2 {
       margin: 0;
@@ -43,6 +45,10 @@
       border-radius: 8px;
       cursor: pointer;
     }
+    .aceptar:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
     .back {
       display: block;
       margin-bottom: 20px;
@@ -53,34 +59,69 @@
   </style>
 </head>
 <body>
-  <a href="" class="back">⬅ Volver a inicio</a>
-  <h1>Viajes Disponibles</h1>
-  <div id="lista-viajes">
-    <!-- Aquí se cargarán los viajes solicitados desde Google Sheets -->
-  </div>  <script>
-    const urlSheet = 'TU_URL_WEB_APP_GET'; // Aquí va tu enlace público del script para obtener los datos JSON de Google Sheet
 
-    fetch(urlSheet)
-      .then(res => res.json())
-      .then(data => {
-        const lista = document.getElementById('lista-viajes');
+<a href="inicio.html" class="back">⬅ Volver a inicio</a>
+<h1>Viajes Disponibles</h1>
 
-        data.forEach(viaje => {
-          const item = document.createElement('div');
-          item.className = 'viaje';
-          item.innerHTML = `
-            <h2>${viaje.nombre}</h2>
-            <p><strong>Recoger:</strong> ${viaje.recogida}</p>
-            <p><strong>Destino:</strong> ${viaje.destino}</p>
-            <p><strong>Hora:</strong> ${viaje.timestamp || 'Desconocida'}</p>
-            <button class="aceptar" onclick="alert('Has aceptado el viaje de ${viaje.nombre}')">Aceptar</button>
-          `;
-          lista.appendChild(item);
-        });
-      })
-      .catch(err => {
-        document.getElementById('lista-viajes').innerHTML = '<p>Error al cargar viajes.</p>';
-        console.error(err);
-      });
-  </script></body>
-</html>
+<div id="lista-viajes">
+
+  <!-- Tarjetas de viaje -->
+  <div class="viaje" id="viaje1">
+    <h2>Juan Herrera</h2>
+    <p><strong>Recoger:</strong> Calle 10 # 15-22</p>
+    <p><strong>Destino:</strong> Hospital Paz de Ariporo</p>
+    <p><strong>Hora:</strong> 10:00 am</p>
+    <button class="aceptar" onclick="aceptarViaje(this, 'Juan Herrera', 'XYZ123', '5 min')">Aceptar</button>
+  </div>
+
+  <div class="viaje" id="viaje2">
+    <h2>Luisa Rojas</h2>
+    <p><strong>Recoger:</strong> Parque Principal</p>
+    <p><strong>Destino:</strong> SENA Paz de Ariporo</p>
+    <p><strong>Hora:</strong> 10:15 am</p>
+    <button class="aceptar" onclick="aceptarViaje(this, 'Luisa Rojas', 'ABC456', '4 min')">Aceptar</button>
+  </div>
+
+  <div class="viaje" id="viaje3">
+    <h2>Manuel Ortiz</h2>
+    <p><strong>Recoger:</strong> Terminal de Transporte</p>
+    <p><strong>Destino:</strong> Universidad UNAD</p>
+    <p><strong>Hora:</strong> 10:30 am</p>
+    <button class="aceptar" onclick="aceptarViaje(this, 'Manuel Ortiz', 'JKL789', '6 min')">Aceptar</button>
+  </div>
+
+  <div class="viaje" id="viaje4">
+    <h2>Yuliana Martínez</h2>
+    <p><strong>Recoger:</strong> Carrera 20 # 9-15</p>
+    <p><strong>Destino:</strong> Plaza de Mercado</p>
+    <p><strong>Hora:</strong> 10:45 am</p>
+    <button class="aceptar" onclick="aceptarViaje(this, 'Yuliana Martínez', 'MNO321', '7 min')">Aceptar</button>
+  </div>
+
+  <div class="viaje" id="viaje5">
+    <h2>Camilo Pérez</h2>
+    <p><strong>Recoger:</strong> Centro Comercial Real</p>
+    <p><strong>Destino:</strong> Calle 6 # 4-10 (B. La Esperanza)</p>
+    <p><strong>Hora:</strong> 11:00 am</p>
+    <button class="aceptar" onclick="aceptarViaje(this, 'Camilo Pérez', 'DEF654', '6 min')">Aceptar</button>
+  </div>
+
+</div>
+
+<script>
+  function aceptarViaje(boton, nombre, placa, tiempo) {
+    if (boton.disabled) {
+      alert("❌ Viaje ya fue tomado por otro conductor.");
+      return;
+    }
+
+    alert(`✅ Has aceptado el viaje de ${nombre}.\n\n🚀 Su conductor va en camino.\n🚦 Placa: ${placa}\n🕒 Tiempo estimado: ${tiempo}`);
+
+    boton.textContent = "Viaje aceptado";
+    boton.disabled = true;
+    boton.style.backgroundColor = "#94a3b8";
+  }
+</script>
+
+</body>
+  </html>
