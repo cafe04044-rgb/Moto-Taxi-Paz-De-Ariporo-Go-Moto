@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solicitar Viaje</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f1f5f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      background: #fff;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 24px;
+      font-size: 24px;
+    }
+    label {
+      font-weight: 500;
+      display: block;
+      margin-bottom: 6px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #2563eb;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #1d4ed8;
+    }
+    .back {
+      display: block;
+      margin-bottom: 20px;
+      color: #2563eb;
+      text-decoration: none;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="Inicio.html" class="back">⬅ Volver a inicio</a>
+    <h1>Solicitar Conductor</h1>
+    <form id="form-cliente">
+      <label for="nombre">Tu nombre</label>
+      <input type="text" id="nombre" required /><label for="recogida">Dirección de recogida</label>
+  <input type="text" id="recogida" required />
+
+  <label for="destino">Destino</label>
+  <input type="text" id="destino" required />
+
+  <button type="submit">Solicitar Mototaxi</button>
+</form>
+
+  </div>  <script>
+    const scriptURL = 'TU_WEB_APP_SCRIPT_URL'; // Reemplaza con tu Web App URL de Google Apps Script
+    const form = document.getElementById('form-cliente');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const formData = new FormData();
+      formData.append('nombre', document.getElementById('nombre').value);
+      formData.append('recogida', document.getElementById('recogida').value);
+      formData.append('destino', document.getElementById('destino').value);
+      formData.append('timestamp', new Date().toLocaleString());
+      formData.append('estado', 'pendiente');
+
+      fetch(scriptURL, { method: 'POST', body: formData })
+        .then(() => {
+          alert('¡Solicitud enviada! Un conductor va en camino.');
+          window.location.href = 'Inicio.html';
+        })
+        .catch(error => alert('Error al enviar solicitud: ' + error.message));
+    });
+  </script></body>
+</html>
