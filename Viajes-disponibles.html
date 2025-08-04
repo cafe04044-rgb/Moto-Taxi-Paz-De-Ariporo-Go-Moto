@@ -1,0 +1,86 @@
+<!DOCTYPE html><html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Viajes Disponibles</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f8fafc;
+    }
+    h1 {
+      text-align: center;
+      color: #1e293b;
+      margin-bottom: 20px;
+    }
+    .viaje {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      padding: 16px;
+      margin: 12px auto;
+      max-width: 500px;
+      border-left: 6px solid #2563eb;
+    }
+    .viaje h2 {
+      margin: 0;
+      font-size: 18px;
+      color: #2563eb;
+    }
+    .viaje p {
+      margin: 6px 0;
+      color: #334155;
+    }
+    .aceptar {
+      display: inline-block;
+      margin-top: 10px;
+      background: #22c55e;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .back {
+      display: block;
+      margin-bottom: 20px;
+      color: #2563eb;
+      text-decoration: none;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <a href="inicio.html" class="back">⬅ Volver a inicio</a>
+  <h1>Viajes Disponibles</h1>
+  <div id="lista-viajes">
+    <!-- Aquí se cargarán los viajes solicitados desde Google Sheets -->
+  </div>  <script>
+    const urlSheet = 'TU_URL_WEB_APP_GET'; // Aquí va tu enlace público del script para obtener los datos JSON de Google Sheet
+
+    fetch(urlSheet)
+      .then(res => res.json())
+      .then(data => {
+        const lista = document.getElementById('lista-viajes');
+
+        data.forEach(viaje => {
+          const item = document.createElement('div');
+          item.className = 'viaje';
+          item.innerHTML = `
+            <h2>${viaje.nombre}</h2>
+            <p><strong>Recoger:</strong> ${viaje.recogida}</p>
+            <p><strong>Destino:</strong> ${viaje.destino}</p>
+            <p><strong>Hora:</strong> ${viaje.timestamp || 'Desconocida'}</p>
+            <button class="aceptar" onclick="alert('Has aceptado el viaje de ${viaje.nombre}')">Aceptar</button>
+          `;
+          lista.appendChild(item);
+        });
+      })
+      .catch(err => {
+        document.getElementById('lista-viajes').innerHTML = '<p>Error al cargar viajes.</p>';
+        console.error(err);
+      });
+  </script></body>
+</html>
