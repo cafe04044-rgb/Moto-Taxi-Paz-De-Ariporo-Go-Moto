@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,6 +26,15 @@
       padding: 24px;
       width: 100%;
       max-width: 400px;
+      position: relative;
+    }
+    .back-arrow {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      font-size: 24px;
+      text-decoration: none;
+      color: #2563eb;
     }
     h1 {
       text-align: center;
@@ -64,31 +72,29 @@
 </head>
 <body>
   <div class="container">
+    <a href="inicio.html" class="back-arrow">⬅</a>
     <h1>Registro de Conductor</h1>
     <form id="form-conductor">
       <label for="nombre">Nombre completo</label>
-      <input type="text" id="nombre" required>
+      <input type="text" id="nombre" required><label for="apellido">Apellido</label>
+  <input type="text" id="apellido" required>
 
-      <label for="apellido">Apellido</label>
-      <input type="text" id="apellido" required>
+  <label for="tipo-doc">Tipo de documento</label>
+  <select id="tipo-doc" required>
+    <option value="Cédula">Cédula</option>
+    <option value="Tarjeta de identidad">Tarjeta de identidad</option>
+  </select>
 
-      <label for="tipo-doc">Tipo de documento</label>
-      <select id="tipo-doc" required>
-        <option value="Cédula">Cédula</option>
-        <option value="Tarjeta de identidad">Tarjeta de identidad</option>
-      </select>
+  <label for="numero-doc">Número del documento</label>
+  <input type="text" id="numero-doc" required>
 
-      <label for="numero-doc">Número del documento</label>
-      <input type="text" id="numero-doc" required>
+  <label for="placa">Placa de la moto</label>
+  <input type="text" id="placa" required>
 
-      <label for="placa">Placa de la moto</label>
-      <input type="text" id="placa" required>
+  <button type="submit">Registrarme como Conductor</button>
+</form>
 
-      <button type="submit">Registrarme como Conductor</button>
-    </form>
-  </div>
-
-  <script>
+  </div>  <script>
     const scriptURL = 'TU_WEB_APP_SCRIPT_URL'; // Aquí va tu enlace del script vinculado a Google Sheet
     const form = document.getElementById('form-conductor');
 
@@ -109,6 +115,5 @@
         })
         .catch(error => alert('Error al registrar: ' + error.message));
     });
-  </script>
-</body>
+  </script></body>
 </html>
