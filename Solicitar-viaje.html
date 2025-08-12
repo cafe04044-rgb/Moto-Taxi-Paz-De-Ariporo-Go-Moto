@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -66,22 +67,28 @@
     <h1>Solicitar Conductor</h1>
     <form id="form-cliente">
       <label for="nombre">Tu nombre</label>
-      <input type="text" id="nombre" required /><label for="recogida">Dirección de recogida</label>
-  <input type="text" id="recogida" required />
+      <input type="text" id="nombre" required />
+      
+      <label for="recogida">Dirección de recogida</label>
+      <input type="text" id="recogida" required />
 
-  <label for="destino">Destino</label>
-  <input type="text" id="destino" required />
+      <label for="destino">Destino</label>
+      <input type="text" id="destino" required />
 
-  <button type="submit">Solicitar Mototaxi</button>
-</form>
+      <button type="submit">Solicitar Mototaxi</button>
+    </form>
+  </div>
 
-  </div>  <script>
-    const scriptURL = 'https://docs.google.com/spreadsheets/d/1Arok6Pn1su2KF0ulz5FBRrXhTpeIA6NtTaESM-yNv8g/edit?usp=drivesdk'; // Reemplaza con tu Web App URL de Google Apps Script
+  <script>
+    // ⚠️ Pega aquí la URL del Web App de Google Apps Script
+    const scriptURL = 'AQUÍ_VA_LA_URL_DEL_WEB_APP';
     const form = document.getElementById('form-cliente');
 
     form.addEventListener('submit', e => {
       e.preventDefault();
+
       const formData = new FormData();
+      formData.append('hoja', 'Solicitudes'); // 📌 Indicamos en qué hoja guardar
       formData.append('nombre', document.getElementById('nombre').value);
       formData.append('recogida', document.getElementById('recogida').value);
       formData.append('destino', document.getElementById('destino').value);
@@ -91,9 +98,10 @@
       fetch(scriptURL, { method: 'POST', body: formData })
         .then(() => {
           alert('¡Solicitud enviada! Un conductor va en camino.');
-          window.location.href = 'Inicio.html';
+          window.location.href = 'viajes-disponibles.html';
         })
         .catch(error => alert('Error al enviar solicitud: ' + error.message));
     });
-  </script></body>
+  </script>
+</body>
 </html>
