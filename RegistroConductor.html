@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -76,35 +77,33 @@
     <h1>Registro de Conductor</h1>
     <form id="form-conductor">
       <label for="nombre">Nombre completo</label>
-      <input type="text" id="nombre" required>
-  <label for="tipo-doc">Tipo de documento</label>
-  <select id="tipo-doc" required>
-    <option value="Cédula">Cédula</option>
-    <option value="Tarjeta de identidad">Tarjeta de identidad</option>
-  </select>
+      <input type="text" id="nombre" name="nombre" required>
 
-  <label for="numero-doc">Número del documento</label>
-  <input type="text" id="numero-doc" required>
+      <label for="tipo-doc">Tipo de documento</label>
+      <select id="tipo-doc" name="tipo-doc" required>
+        <option value="Cédula">Cédula</option>
+        <option value="Tarjeta de identidad">Tarjeta de identidad</option>
+      </select>
 
-  <label for="placa">Placa de la moto</label>
-  <input type="text" id="placa" required>
+      <label for="numero-doc">Número del documento</label>
+      <input type="text" id="numero-doc" name="numero-doc" required>
 
-  <button type="submit">Registrarme como Conductor</button>
-</form>
+      <label for="placa">Placa de la moto</label>
+      <input type="text" id="placa" name="placa" required>
 
-  </div>  <script>
-    const scriptURL = 'https://docs.google.com/spreadsheets/d/1Arok6Pn1su2KF0ulz5FBRrXhTpeIA6NtTaESM-yNv8g/edit?usp=drivesdk'; // Aquí va tu enlace del script vinculado a Google Sheet
+      <button type="submit">Registrarme como Conductor</button>
+    </form>
+  </div>
+
+  <script>
+    // Pega aquí tu URL del Apps Script una vez creado
+    const scriptURL = 'URL_DE_TU_SCRIPT_WEB_APP';
     const form = document.getElementById('form-conductor');
 
     form.addEventListener('submit', e => {
       e.preventDefault();
 
-      const formData = new FormData();
-      formData.append('nombre', document.getElementById('nombre').value);
-      formData.append('apellido', document.getElementById('apellido').value);
-      formData.append('tipo-doc', document.getElementById('tipo-doc').value);
-      formData.append('numero-doc', document.getElementById('numero-doc').value);
-      formData.append('placa', document.getElementById('placa').value);
+      const formData = new FormData(form);
 
       fetch(scriptURL, { method: 'POST', body: formData })
         .then(() => {
@@ -113,5 +112,6 @@
         })
         .catch(error => alert('Error al registrar: ' + error.message));
     });
-  </script></body>
+  </script>
+</body>
 </html>
