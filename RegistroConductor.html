@@ -96,19 +96,25 @@
   </div>
 
   <script>
-    // Pega aquí tu URL del Apps Script una vez creado
-    const scriptURL = 'URL_DE_TU_SCRIPT_WEB_APP';
+    // ⚠️ Pega aquí la URL del Web App de Google Apps Script (la misma que usas para solicitudes)
+    const scriptURL = 'AQUÍ_VA_LA_URL_DEL_WEB_APP';
     const form = document.getElementById('form-conductor');
 
     form.addEventListener('submit', e => {
       e.preventDefault();
 
-      const formData = new FormData(form);
+      const formData = new FormData();
+      formData.append('hoja', 'Conductores'); // 📌 Guardar en la pestaña Conductores
+      formData.append('nombre', document.getElementById('nombre').value);
+      formData.append('tipo_doc', document.getElementById('tipo-doc').value);
+      formData.append('numero_doc', document.getElementById('numero-doc').value);
+      formData.append('placa', document.getElementById('placa').value);
+      formData.append('timestamp', new Date().toLocaleString());
 
       fetch(scriptURL, { method: 'POST', body: formData })
         .then(() => {
-          alert('Bienvenido conductor. Serás redirigido a las solicitudes de viaje.');
-          window.location.href = 'Viajes-disponibles.html';
+          alert('✅ Registro completado. Ahora podrás ver solicitudes disponibles.');
+          window.location.href = 'viajes-disponibles.html';
         })
         .catch(error => alert('Error al registrar: ' + error.message));
     });
