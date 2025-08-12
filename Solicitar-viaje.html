@@ -67,13 +67,13 @@
     <h1>Solicitar Conductor</h1>
     <form id="form-cliente">
       <label for="nombre">Tu nombre</label>
-      <input type="text" id="nombre" required />
+      <input type="text" id="nombre" name="nombre" required />
       
       <label for="recogida">Dirección de recogida</label>
-      <input type="text" id="recogida" required />
+      <input type="text" id="recogida" name="recogida" required />
 
       <label for="destino">Destino</label>
-      <input type="text" id="destino" required />
+      <input type="text" id="destino" name="destino" required />
 
       <button type="submit">Solicitar Mototaxi 🏍</button>
     </form>
@@ -88,7 +88,7 @@
       e.preventDefault();
 
       const formData = new FormData();
-      formData.append('hoja', 'Solicitudes'); // 📌 Indicamos en qué hoja guardar
+      formData.append('hoja', 'Solicitudes'); // 📌 Nombre de la pestaña en el Google Sheet
       formData.append('nombre', document.getElementById('nombre').value);
       formData.append('recogida', document.getElementById('recogida').value);
       formData.append('destino', document.getElementById('destino').value);
