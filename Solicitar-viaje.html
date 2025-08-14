@@ -4,9 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Solicitar Viaje</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    * {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
-      font-family: 'Segoe UI', sans-serif;
       background: #f1f5f9;
       display: flex;
       justify-content: center;
@@ -15,49 +21,53 @@
       padding: 20px;
     }
     .container {
-      background: #fff;
-      padding: 24px;
+      background: white;
       border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+      padding: 24px;
       width: 100%;
       max-width: 400px;
+      position: relative;
+    }
+    .back {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      font-size: 20px;
+      text-decoration: none;
+      color: #2563eb;
     }
     h1 {
       text-align: center;
-      margin-bottom: 24px;
       font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 24px;
     }
     label {
-      font-weight: 500;
       display: block;
       margin-bottom: 6px;
+      font-weight: 500;
+      color: #334155;
     }
     input {
       width: 100%;
       padding: 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
       margin-bottom: 16px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
     }
     button {
       width: 100%;
-      padding: 12px;
-      background-color: #2563eb;
+      background: #2563eb;
       color: white;
-      font-weight: bold;
+      padding: 12px;
       border: none;
       border-radius: 10px;
+      font-weight: 600;
       cursor: pointer;
     }
     button:hover {
-      background-color: #1d4ed8;
-    }
-    .back {
-      display: block;
-      margin-bottom: 20px;
-      color: #2563eb;
-      text-decoration: none;
-      font-size: 16px;
+      background: #1d4ed8;
     }
   </style>
 </head>
@@ -80,7 +90,7 @@
   </div>
 
   <script>
-    // ⚠️ Pega aquí la URL del Web App de Google Apps Script
+    // URL del Web App de Google Apps Script
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxQpW1Vk7nmTBAb_qQmjo3al3roHLWdLdgSGWLPOipxb7I6Q68peutymmN4PD8tVWw/exec';
     const form = document.getElementById('form-cliente');
 
@@ -88,7 +98,7 @@
       e.preventDefault();
 
       const formData = new FormData();
-      formData.append('hoja', 'Solicitudes'); // 📌 Nombre de la pestaña en el Google Sheet
+      formData.append('hoja', 'Solicitudes'); // Nombre exacto de la pestaña en Google Sheets
       formData.append('nombre', document.getElementById('nombre').value);
       formData.append('recogida', document.getElementById('recogida').value);
       formData.append('destino', document.getElementById('destino').value);
@@ -97,10 +107,10 @@
 
       fetch(scriptURL, { method: 'POST', body: formData })
         .then(() => {
-          alert('¡Solicitud enviada! Un conductor va en camino.');
+          alert('✅ ¡Solicitud enviada! Un conductor va en camino.');
           window.location.href = 'Inicio.html';
         })
-        .catch(error => alert('Error al enviar solicitud: ' + error.message));
+        .catch(error => alert('❌ Error al enviar solicitud: ' + error.message));
     });
   </script>
 </body>
