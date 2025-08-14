@@ -98,11 +98,11 @@
 
       const formData = new FormData();
       formData.append('hoja', 'Solicitudes'); // Pestaña en Google Sheets
-      formData.append('fecha', new Date().toLocaleString());
+      formData.append('timestamp', new Date().toLocaleString()); // ✅ nombre correcto
       formData.append('nombre', document.getElementById('nombre').value);
-      formData.append('origen', document.getElementById('origen').value);
+      formData.append('recogida', document.getElementById('origen').value); // ✅ nombre correcto
       formData.append('destino', document.getElementById('destino').value);
-      formData.append('estado', 'Pendiente');
+      formData.append('estado', 'pendiente'); // en minúscula para coincidir
 
       fetch(scriptURL, { method: 'POST', body: formData })
         .then(() => {
