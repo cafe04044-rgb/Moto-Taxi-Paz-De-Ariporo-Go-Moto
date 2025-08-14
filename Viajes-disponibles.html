@@ -4,12 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Viajes Disponibles</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
+    * {
+      font-family: 'Inter', sans-serif;
       margin: 0;
-      padding: 20px;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
       background-color: #f8fafc;
+      padding: 20px;
     }
     h1 {
       text-align: center;
@@ -24,10 +29,8 @@
       margin: 12px auto;
       max-width: 500px;
       border-left: 6px solid #2563eb;
-      position: relative;
     }
     .viaje h2 {
-      margin: 0;
       font-size: 18px;
       color: #2563eb;
     }
@@ -36,7 +39,6 @@
       color: #334155;
     }
     .aceptar {
-      display: inline-block;
       margin-top: 10px;
       background: #22c55e;
       color: white;
@@ -60,68 +62,63 @@
 </head>
 <body>
 
-<a href="" class="back">⬅ Volver a inicio</a>
+<a href="Inicio.html" class="back">⬅ Volver a inicio</a>
 <h1>Viajes Disponibles</h1>
 
-<div id="lista-viajes">
-
-  <!-- Tarjetas de viaje -->
-  <div class="viaje" id="viaje1">
-    <h2>Juan Herrera</h2>
-    <p><strong>Recoger:</strong> Calle 10 # 15-22</p>
-    <p><strong>Destino:</strong> Hospital Paz de Ariporo</p>
-    <p><strong>Hora:</strong> 10:00 am</p>
-    <button class="aceptar" onclick="aceptarViaje(this, 'Juan Herrera', 'XYZ123', '5 min')">Aceptar</button>
-  </div>
-
-  <div class="viaje" id="viaje2">
-    <h2>Luisa Rojas</h2>
-    <p><strong>Recoger:</strong> Parque Principal</p>
-    <p><strong>Destino:</strong> SENA Paz de Ariporo</p>
-    <p><strong>Hora:</strong> 10:15 am</p>
-    <button class="aceptar" onclick="aceptarViaje(this, 'Luisa Rojas', 'ABC456', '4 min')">Aceptar</button>
-  </div>
-
-  <div class="viaje" id="viaje3">
-    <h2>Manuel Ortiz</h2>
-    <p><strong>Recoger:</strong> Terminal de Transporte</p>
-    <p><strong>Destino:</strong> Universidad UNAD</p>
-    <p><strong>Hora:</strong> 10:30 am</p>
-    <button class="aceptar" onclick="aceptarViaje(this, 'Manuel Ortiz', 'JKL789', '6 min')">Aceptar</button>
-  </div>
-
-  <div class="viaje" id="viaje4">
-    <h2>Yuliana Martínez</h2>
-    <p><strong>Recoger:</strong> Carrera 20 # 9-15</p>
-    <p><strong>Destino:</strong> Plaza de Mercado</p>
-    <p><strong>Hora:</strong> 10:45 am</p>
-    <button class="aceptar" onclick="aceptarViaje(this, 'Yuliana Martínez', 'MNO321', '7 min')">Aceptar</button>
-  </div>
-
-  <div class="viaje" id="viaje5">
-    <h2>Camilo Pérez</h2>
-    <p><strong>Recoger:</strong> Centro Comercial Real</p>
-    <p><strong>Destino:</strong> Calle 6 # 4-10 (B. La Esperanza)</p>
-    <p><strong>Hora:</strong> 11:00 am</p>
-    <button class="aceptar" onclick="aceptarViaje(this, 'Camilo Pérez', 'DEF654', '6 min')">Aceptar</button>
-  </div>
-
-</div>
+<div id="lista-viajes"></div>
 
 <script>
-  function aceptarViaje(boton, nombre, placa, tiempo) {
-    if (boton.disabled) {
-      alert("❌ Viaje ya fue tomado por otro conductor.");
-      return;
-    }
+  const scriptURL = "https://script.google.com/macros/s/AKfycbxQpW1Vk7nmTBAb_qQmjo3al3roHLWdLdgSGWLPOipxb7I6Q68peutymmN4PD8tVWw/exec";
 
-    alert(`✅ Has aceptado el viaje de ${nombre}.\n\n🚀 Su conductor va en camino.\n🚦 Placa: ${placa}\n🕒 Tiempo estimado: ${tiempo}`);
+  // Cargar viajes disponibles
+  fetch(`${scriptURL}?hoja=Solicitudes`)
+    .then(res => res.json())
+    .then(data => {
+      const lista = document.getElementById("lista-viajes");
+      lista.innerHTML = "";
 
-    boton.textContent = "Viaje aceptado";
-    boton.disabled = true;
-    boton.style.backgroundColor = "#94a3b8";
+      data.forEach(viaje => {
+        if (viaje.estado && viaje.estado.toLowerCase() === "pendiente") {
+          const card = document.createElement("div");
+          card.className = "viaje";
+          card.innerHTML = `
+            <h2>${viaje.nombre}</h2>
+            <p><strong>Recoger:</strong> ${viaje.recogida}</p>
+            <p><strong>Destino:</strong> ${viaje.destino}</p>
+            <p><strong>Hora:</strong> ${viaje.timestamp}</p>
+            <button class="aceptar">Aceptar</button>
+          `;
+
+          const boton = card.querySelector(".aceptar");
+          boton.addEventListener("click", () => aceptarViaje(boton, viaje.nombre));
+
+          lista.appendChild(card);
+        }
+      });
+    })
+    .catch(err => alert("Error al cargar viajes: " + err));
+
+  // Aceptar un viaje
+  function aceptarViaje(boton, nombreCliente) {
+    const nombreConductor = prompt("Ingresa tu nombre para aceptar el viaje:");
+    if (!nombreConductor) return;
+
+    const formData = new FormData();
+    formData.append("hoja", "Solicitudes");
+    formData.append("accion", "aceptar");
+    formData.append("nombreCliente", nombreCliente);
+    formData.append("nombreConductor", nombreConductor);
+
+    fetch(scriptURL, { method: "POST", body: formData })
+      .then(() => {
+        boton.textContent = "Viaje aceptado";
+        boton.disabled = true;
+        boton.style.backgroundColor = "#94a3b8";
+        alert(`✅ Has aceptado el viaje de ${nombreCliente}.`);
+      })
+      .catch(err => alert("Error al aceptar viaje: " + err));
   }
 </script>
 
 </body>
-  </html>
+</html>
