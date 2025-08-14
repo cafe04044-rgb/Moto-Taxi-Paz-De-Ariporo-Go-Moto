@@ -80,13 +80,13 @@
       <input type="text" id="nombre" name="nombre" required>
 
       <label for="tipo-doc">Tipo de documento</label>
-      <select id="tipo-doc" name="tipo-doc" required>
+      <select id="tipo-doc" name="tipo_doc" required>
         <option value="Cédula">Cédula</option>
         <option value="Tarjeta de identidad">Tarjeta de identidad</option>
       </select>
 
       <label for="numero-doc">Número del documento</label>
-      <input type="text" id="numero-doc" name="numero-doc" required>
+      <input type="text" id="numero-doc" name="numero_doc" required>
 
       <label for="placa">Placa de la moto</label>
       <input type="text" id="placa" name="placa" required>
@@ -96,7 +96,7 @@
   </div>
 
   <script>
-    // ⚠️ Pega aquí la URL del Web App de Google Apps Script (la misma que usas para solicitudes)
+    // URL del Web App de Google Apps Script
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxQpW1Vk7nmTBAb_qQmjo3al3roHLWdLdgSGWLPOipxb7I6Q68peutymmN4PD8tVWw/exec';
     const form = document.getElementById('form-conductor');
 
@@ -104,7 +104,7 @@
       e.preventDefault();
 
       const formData = new FormData();
-      formData.append('hoja', 'Conductores'); // 📌 Guardar en la pestaña Conductores
+      formData.append('hoja', 'Conductores'); // Nombre exacto de la pestaña en Google Sheets
       formData.append('nombre', document.getElementById('nombre').value);
       formData.append('tipo_doc', document.getElementById('tipo-doc').value);
       formData.append('numero_doc', document.getElementById('numero-doc').value);
@@ -114,9 +114,9 @@
       fetch(scriptURL, { method: 'POST', body: formData })
         .then(() => {
           alert('✅ Registro completado. Ahora podrás ver solicitudes disponibles.');
-          window.location.href = 'viajes-disponibles.html';
+          window.location.href = 'Viajes-disponibles.html';
         })
-        .catch(error => alert('Error al registrar: ' + error.message));
+        .catch(error => alert('❌ Error al registrar: ' + error.message));
     });
   </script>
 </body>
