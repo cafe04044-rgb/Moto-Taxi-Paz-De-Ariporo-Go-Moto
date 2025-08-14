@@ -70,7 +70,7 @@
 <script>
   const scriptURL = "https://script.google.com/macros/s/AKfycbxQpW1Vk7nmTBAb_qQmjo3al3roHLWdLdgSGWLPOipxb7I6Q68peutymmN4PD8tVWw/exec";
 
-  // Cargar viajes disponibles
+  // Cargar viajes pendientes
   fetch(`${scriptURL}?hoja=Solicitudes`)
     .then(res => res.json())
     .then(data => {
@@ -78,19 +78,19 @@
       lista.innerHTML = "";
 
       data.forEach(viaje => {
-        if (viaje.estado && viaje.estado.toLowerCase() === "pendiente") {
+        if (viaje.Estado && viaje.Estado.toLowerCase() === "pendiente") {
           const card = document.createElement("div");
           card.className = "viaje";
           card.innerHTML = `
-            <h2>${viaje.nombre}</h2>
-            <p><strong>Recoger:</strong> ${viaje.recogida}</p>
-            <p><strong>Destino:</strong> ${viaje.destino}</p>
-            <p><strong>Hora:</strong> ${viaje.timestamp}</p>
+            <h2>${viaje.Nombre}</h2>
+            <p><strong>Recoger:</strong> ${viaje.Origen}</p>
+            <p><strong>Destino:</strong> ${viaje.Destino}</p>
+            <p><strong>Fecha:</strong> ${viaje.Fecha}</p>
             <button class="aceptar">Aceptar</button>
           `;
 
           const boton = card.querySelector(".aceptar");
-          boton.addEventListener("click", () => aceptarViaje(boton, viaje.nombre));
+          boton.addEventListener("click", () => aceptarViaje(boton, viaje.Nombre));
 
           lista.appendChild(card);
         }
