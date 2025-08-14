@@ -79,8 +79,8 @@
       <label for="nombre">Tu nombre</label>
       <input type="text" id="nombre" name="nombre" required />
       
-      <label for="recogida">Dirección de recogida</label>
-      <input type="text" id="recogida" name="recogida" required />
+      <label for="origen">Dirección de origen</label>
+      <input type="text" id="origen" name="origen" required />
 
       <label for="destino">Destino</label>
       <input type="text" id="destino" name="destino" required />
@@ -90,7 +90,6 @@
   </div>
 
   <script>
-    // URL del Web App de Google Apps Script
     const scriptURL = 'https://script.google.com/macros/s/AKfycbxQpW1Vk7nmTBAb_qQmjo3al3roHLWdLdgSGWLPOipxb7I6Q68peutymmN4PD8tVWw/exec';
     const form = document.getElementById('form-cliente');
 
@@ -98,16 +97,16 @@
       e.preventDefault();
 
       const formData = new FormData();
-      formData.append('hoja', 'Solicitudes'); // Nombre exacto de la pestaña en Google Sheets
+      formData.append('hoja', 'Solicitudes'); // Pestaña en Google Sheets
+      formData.append('fecha', new Date().toLocaleString());
       formData.append('nombre', document.getElementById('nombre').value);
-      formData.append('recogida', document.getElementById('recogida').value);
+      formData.append('origen', document.getElementById('origen').value);
       formData.append('destino', document.getElementById('destino').value);
-      formData.append('timestamp', new Date().toLocaleString());
-      formData.append('estado', 'pendiente');
+      formData.append('estado', 'Pendiente');
 
       fetch(scriptURL, { method: 'POST', body: formData })
         .then(() => {
-          alert('✅ ¡Solicitud enviada! Un conductor va en camino.');
+          alert('✅ ¡Solicitud enviada! Un conductor será asignado.');
           window.location.href = 'Inicio.html';
         })
         .catch(error => alert('❌ Error al enviar solicitud: ' + error.message));
